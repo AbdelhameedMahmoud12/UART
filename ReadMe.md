@@ -132,7 +132,7 @@ receive).</li>
   </tbody>
 </table>
 <p align="center">
-  <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
+  <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="1000">
 </p>
 
 
@@ -143,9 +143,9 @@ receive).</li>
 
 <p>The <strong>UART Transmitter</strong> is composed of <strong>six main modules</strong> that cooperate to convert parallel data into a UART-formatted serial stream. The transmitter accepts an 8-bit parallel input (<code>P_Data</code>) together with control signals (data valid, parity enable/type). It serializes the data, optionally appends a parity bit, and sends the formatted frame out on <code>Tx_OUT</code>.</p>
 <figure style="text-align:center; margin:20px 0;">
-  <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
+  <img src="docs/TxArch.png" alt="UART Transmitter Block Diagram" width="1000">
   <figcaption style="font-size:14px; color:#555; margin-top:8px;">
-    Figure 1: Counter Module Block Diagram
+    Figure 2: UART Transmitter Block Diagram
   </figcaption>
 </figure>
 <h2>UART frame format</h2>
@@ -156,9 +156,12 @@ receive).</li>
 <div class="module">
 <h3>1. FSM of Transmitter</h3>
 <p><strong>Role:</strong> The UART_FSM_Tx module implements a finite state machine to control the UART transmission sequence, transitioning through states: IDLE, START, DATA, PARITY (optional), STOP, and back to IDLE, based on input signals like Data_Valid, Parity_Enable, and Done_Flag. In IDLE, it waits for data, then moves to START to send the start bit, followed by DATA for the 8 data bits, optionally proceeds to PARITY if enabled, and finally sends the STOP bit before returning to IDLE. The module uses state encoding with a 5-bit register, with combinational logic dictating next state transitions and output signals—Busy and Selector—that indicate transmission status and select the appropriate data bit or control signal for the multiplexer driving the UART transmission line. The design ensures synchronized control over UART data flow, managing the timing and sequence of bits in a reliable manner..</p>
-    <p align="center">
-  <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
-</p>
+<figure style="text-align:center; margin:20px 0;">
+  <img src="docs/FSM_Tx.png" alt="UART Transmitter State Machine" width="1000">
+  <figcaption style="font-size:14px; color:#555; margin-top:8px;">
+    Figure 3: UART Transmitter State Machine
+  </figcaption>
+</figure>
 
 </div>
 
@@ -343,6 +346,7 @@ The Counter works closely with the FSM, which controls when counting starts and 
     higher-level layers to handle faults, request retransmissions, or 
     discard corrupted frames.
   </p>
+
 
 
 
