@@ -28,13 +28,14 @@ receive).</li>
   <li>Baud prescaler (set according to system clock).</li>
   <li>Supports run-time configurable baud rate.</li>
   <li>Self-checking testbench with directed tests and error injection.</li>
+
 </ul>
 <h2 id="interface">Top-Level Interface</h2>
 <p>The The UART controller consists of a UART transmitter finite state machine
 (FSM), UART receiver FSM, and a baud rate generator..</p>
-<table style="width:100%; border-collapse:collapse;">
+<table align="center";style="width:100%; border-collapse:collapse;">
   <thead>
-    <tr style="background:#f2f2f2;">
+    <tr style="background:#A2f202;">
       <th style="border:1px solid #ddd; padding:8px; text-align:left;">Signal Name</th>
       <th style="border:1px solid #ddd; padding:8px; text-align:left;">Direction</th>
       <th style="border:1px solid #ddd; padding:8px; text-align:left;">Width</th>
@@ -155,4 +156,5 @@ run -all</pre>
 
 <hr/>
 <p style="font-size:0.9rem; color:#666;">Note: Update the <code>Prescale</code> default to match your clock and baud requirements. If you want the table styled differently, or need column reordering, tell me which columns or signals to change.</p>
+
 
