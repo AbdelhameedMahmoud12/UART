@@ -11,7 +11,7 @@
   <ul style="list-style:none; padding:0; margin:12px 0; line-height:2.2;">
     <li><a href="#overview" class="toc-link">Overview</a></li>
     <li><a href="#interface" class="toc-link">Top Interface</a></li>
-    <li><a href="#parameters" class="toc-link">Parameters</a></li>
+    <li><a href="#Architecture of UART Transmitter" class="toc-link">Architecture of UART Transmitter</a></li>
     <li><a href="#usage" class="toc-link">Usage</a></li>
     <li><a href="#diagram" class="toc-link">Block Diagram</a></li>
   </ul>
@@ -135,29 +135,59 @@ receive).</li>
   <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
 </p>
 
-<h2 id="parameters">Parameters (defaults)</h2>
-<ul>
-  <li><strong>DATA_BITS</strong>: 8</li>
-  <li><strong>PARITY</strong>: "none"</li>
-  <li><strong>STOP_BITS</strong>: 1</li>
-  <li><strong>PRESCALE</strong>: 27 (example for Fclk=50MHz, BAUD=115200, OVERSAMPLE=16)</li>
-</ul>
 
-<h2 id="usage">Usage</h2>
-<p>Compile and simulate with a Verilog simulator. Example commands for ModelSim/Questa:</p>
-<pre style="background:#f6f8fa; padding:10px; border-radius:6px;">vlog rtl/uart_tx.v rtl/uart_rx.v rtl/uart_baud.v rtl/uart_top.v tb/uart_tb.v
-vsim -voptargs=+acc work.uart_tb
-run -all</pre>
 
-<h2 id="diagram">Block Diagram</h2>
-<!-- Add your image to docs/uart_block.png so GitHub renders it. -->
-<div style="text-align:center; margin:12px 0;">
-  <img src="docs/uart_block.png" alt="UART Block Diagram" style="max-width:900px; width:100%; border-radius:8px; border:1px solid #e6e6e6;"/>
-  <p style="color:#666; font-size:0.9rem;">Figure: Top-level UART architecture (Baud generator, TX, RX)</p>
+<h1 id="Architecture of UART Transmitter">Architecture of UART Transmitter</h1>
+
+
+
+<p>The <strong>UART Transmitter</strong> is composed of <strong>six main modules</strong> that cooperate to convert parallel data into a UART-formatted serial stream. The transmitter accepts an 8-bit parallel input (<code>P_Data</code>) together with control signals (data valid, parity enable/type). It serializes the data, optionally appends a parity bit, and sends the formatted frame out on <code>Tx_OUT</code>.</p>
+<p align="center">
+  <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
+</p>
+
+<h2>UART frame format</h2>
+<pre class="frame">Start (0) &rarr; Data bits (8, LSB first) &rarr; Parity (optional) &rarr; Stop (1)</pre>
+
+
+<h2 class="modules">Modules description</h2>
+
+
+<div class="module">
+<h3>1. UART_Tx_Top</h3>
+<p><strong>Role:</strong> Top-level module that instantiates and connects all submodules. It exposes the primary I/O such as system clock, P_Data, parity control signals, <code>Tx_OUT</code> and <code>Busy</code>.</p>
 </div>
 
-<hr/>
-<p style="font-size:0.9rem; color:#666;">Note: Update the <code>Prescale</code> default to match your clock and baud requirements. If you want the table styled differently, or need column reordering, tell me which columns or signals to change.</p>
+
+<div class="module">
+<h3>2. UART_FSM_Tx</h3>
+<p><strong>Role:</strong> The finite state machine that controls the transmission sequence. Typical states include <em>Idle</em>, <em>Start</em>, <em>Data</em>, <em>Parity</em>, and <em>Stop</em>. It produces control signals (e.g., <code>Selector</code>) used by the MUX and <code>Busy</code> to indicate an ongoing transmission.</p>
+</div>
+
+
+<div class="module">
+<h3>3. Counter_Control</h3>
+<p><strong>Role:</strong> Generates per-bit timing and counts the number of transmitted data bits. It asserts a <code>Done_Flag</code> when all 8 data bits have been shifted out and provides enables to the serializer on each bit period.</p>
+</div>
+
+
+<div class="module">
+<h3>4. Parity_Tx</h3>
+<p><strong>Role:</strong> Computes the parity bit from the 8-bit input (<code>P_Data</code>). Supports both even and odd parity selection via a control input (e.g., <code>Parity_Type</code>), and outputs a single <code>Par_bit</code> used during the parity stage.</p>
+</div>
+
+
+<div class="module">
+<h3>5. Serializer_Tx</h3>
+<p><strong>Role:</strong> Converts the parallel 8-bit word into a serial stream. When enabled by <code>Counter_Control</code>, the serializer shifts out one bit per bit-period, typically LSB first to conform with UART conventions.</p>
+</div>
+
+
+<div class="module">
+<h3>6. MUX_Tx</h3>
+<p><strong>Role:</strong> Selects which logical bit is driven to <code>Tx_OUT</code> at each stage of the frame. The MUX chooses between the constant <code>Start</code> value (0), the serializer output (data bits), the parity bit (from <code>Parity_Tx</code>), and the constant <code>Stop</code> value (1), based on a <code>Selector</code> signal from the FSM.</p>
+</div>
+
 
 
 
