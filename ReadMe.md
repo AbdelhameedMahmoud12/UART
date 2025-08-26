@@ -129,7 +129,7 @@ receive).</li>
   </tbody>
 </table>
 <p align="center">
-  <img src="master/docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
+  <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
 </p>
 
 <h2 id="parameters">Parameters (defaults)</h2>
@@ -155,3 +155,4 @@ run -all</pre>
 
 <hr/>
 <p style="font-size:0.9rem; color:#666;">Note: Update the <code>Prescale</code> default to match your clock and baud requirements. If you want the table styled differently, or need column reordering, tell me which columns or signals to change.</p>
+
