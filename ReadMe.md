@@ -142,10 +142,12 @@ receive).</li>
 
 
 <p>The <strong>UART Transmitter</strong> is composed of <strong>six main modules</strong> that cooperate to convert parallel data into a UART-formatted serial stream. The transmitter accepts an 8-bit parallel input (<code>P_Data</code>) together with control signals (data valid, parity enable/type). It serializes the data, optionally appends a parity bit, and sends the formatted frame out on <code>Tx_OUT</code>.</p>
-<p align="center">
+<figure style="text-align:center; margin:20px 0;">
   <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
-</p>
-
+  <figcaption style="font-size:14px; color:#555; margin-top:8px;">
+    Figure 1: Counter Module Block Diagram
+  </figcaption>
+</figure>
 <h2>UART frame format</h2>
 <pre class="frame">Start (0) &rarr; Data bits (8, LSB first) &rarr; Parity (optional) &rarr; Stop (1)</pre>
 
@@ -341,6 +343,7 @@ The Counter works closely with the FSM, which controls when counting starts and 
     higher-level layers to handle faults, request retransmissions, or 
     discard corrupted frames.
   </p>
+
 
 
 
