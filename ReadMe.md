@@ -1,24 +1,26 @@
 
 <!-- HTML README for UART Design -->
-<div align="center" style="margin-top:12px;">
-  <h1 style="margin:0; font-size:2rem;">UART Design (Verilog)</h1>
-  <p style="margin:6px 0 0 0; font-size:1rem;">Serial TX/RX • Configurable baud &amp; frame • Testbench included</p>
-  <p style="margin:10px 0 0 0;">
+<div align="center" style="margin-top:24px;">
+  <h1 style="margin:0; font-size:6rem;">Universal Asynchronous Receiver and Transmitter (UART) </h1>
+</div>
 
+<div style="text-align:center; margin-top:24px;">
+  <p style="margin:0; font-size:3rem; font-weight:700; font-family:Arial, Helvetica, sans-serif; color:#333;">
+    📑 Table of Contents
   </p>
-  <p style="margin:12px 0 0 0;">
-    <a href="#overview">Overview</a> ·
-    <a href="#interface">Top Interface</a> ·
-    <a href="#parameters">Parameters</a> ·
-    <a href="#usage">Usage</a> ·
-    <a href="#diagram">Block Diagram</a>
-  </p>
+  <ul style="list-style:none; padding:0; margin:12px 0; line-height:2.2;">
+    <li><a href="#overview" class="toc-link">Overview</a></li>
+    <li><a href="#interface" class="toc-link">Top Interface</a></li>
+    <li><a href="#parameters" class="toc-link">Parameters</a></li>
+    <li><a href="#usage" class="toc-link">Usage</a></li>
+    <li><a href="#diagram" class="toc-link">Block Diagram</a></li>
+  </ul>
 </div>
 <hr/>
 
 <h2 id="overview">Overview</h2>
-<p>This repository implements a configurable <strong>UART</strong> (Universal Asynchronous Receiver–Transmitter) in <strong>Verilog</strong>.
-It includes TX and RX modules, a prescaler for baud generation, optional parity support, and a self-checking testbench for simulation.</p>
+<p>The Universal Asynchronous Receiver and Transmitter (UART) are described, which is essentially a serial data transfer protocol used in digital circuit applications. The UART transmitter architecture has a baud rate generator, a parity generator, a transmitter finite state machine (FSM), and a parallel in serial out (PISO) register. The UART receiver is composed of a baud rate generator, a negative edge detector, a parity checker, a receiver Finite State Machine (FSM), and a serial in parallel out (SIPO) register. The transmitter and the receiver have the same baud rate generator; therefore, the transmitter/receiver baud rate is the same. The baud rate generator is the same as the frequency divider circuit. A UART transmitter data frame has 1 start bit, 8 transmit data bits, 1 parity bit, and 1 stop bit..</p>
+<hr/>
 <h2 id="features">Features</h2>
 <ul>
   <li>Simple, easy-to-use UART with small logic utilization.</li>
@@ -28,7 +30,7 @@ receive).</li>
   <li>Baud prescaler (set according to system clock).</li>
   <li>Supports run-time configurable baud rate.</li>
   <li>Self-checking testbench with directed tests and error injection.</li>
-
+<hr/>
 </ul>
 <h2 id="interface">Top-Level Interface</h2>
 <p>The The UART controller consists of a UART transmitter finite state machine
@@ -156,5 +158,6 @@ run -all</pre>
 
 <hr/>
 <p style="font-size:0.9rem; color:#666;">Note: Update the <code>Prescale</code> default to match your clock and baud requirements. If you want the table styled differently, or need column reordering, tell me which columns or signals to change.</p>
+
 
 
