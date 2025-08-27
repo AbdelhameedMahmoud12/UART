@@ -13,7 +13,6 @@
     <li><a href="#interface" class="toc-link">Top Interface</a></li>
     <li><a href="#Architecture of UART Transmitter" class="toc-link">Architecture of UART Transmitter</a></li>
     <li><a href="#Architecture of UART Reciver" class="toc-link">Architecture of UART Reciver</a></li>
-    <li><a href="#diagram" class="toc-link">Block Diagram</a></li>
   </ul>
 </div>
 <hr/>
@@ -196,9 +195,12 @@ receive).</li>
 <li><strong>Error Detection Units</strong> — Dedicated logic to validate start, parity, and stop conditions, ensuring corrupted frames are discarded.</li>
 </ul>
 <p>The top module connects these submodules and distributes signals such as counters, enables, error flags, and data validity markers.</p>
-<p align="center">
-  <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
-</p>
+<figure style="text-align:center; margin:20px 0;">
+  <img src="docs/RxArch.png" alt="UART Reciver Block Diagram " width="1000">
+  <figcaption style="font-size:14px; color:#555; margin-top:8px;">
+    Figure 4: UART Reciver Block Diagram
+  </figcaption>
+</figure>
 
 <h2 class="modules">Modules description</h2>
 <div class="module">
@@ -211,9 +213,12 @@ receive).</li>
 <li><strong>PARITY</strong> — Check parity (<code>Parity_En</code>); if <code>Parity_error</code> return to <strong>IDLE</strong>, else at <code>Bit_Counter==10</code> go to <strong>STOP</strong>.</li>
 <li><strong>STOP</strong> — Validate stop bit (<code>Stop_En</code>). On success assert <code>DATA_VLD</code>; if <code>~RX_IN</code> is seen immediately, start a new frame; on <code>Stop_error</code> return to <strong>IDLE</strong>.</li>
 </ul>
-  <p align="center">
-  <img src="docs/UART_TOP_Interface.png" alt="UART Block Diagram" width="800">
-</p>
+<figure style="text-align:center; margin:20px 0;">
+  <img src="docs/FSM_Rx.png" alt="UART Reciver State Machine" width="1000">
+  <figcaption style="font-size:14px; color:#555; margin-top:8px;">
+    Figure 5: UART Reciver State Machine
+  </figcaption>
+</figure>
 
 
 <section id="working">
@@ -346,6 +351,7 @@ The Counter works closely with the FSM, which controls when counting starts and 
     higher-level layers to handle faults, request retransmissions, or 
     discard corrupted frames.
   </p>
+
 
 
 
