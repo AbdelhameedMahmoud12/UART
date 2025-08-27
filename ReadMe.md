@@ -271,31 +271,7 @@ The counter increments in response to the system clock whenever enabled by the F
 The Counter works closely with the FSM, which controls when counting starts and resets. Its outputs (bit position and validity signals) are used by the deserializer to know when to sample bits, and by the error detection logic to determine if the start, parity, or stop bits were correctly received.
 </p>
 
-
-<h3>3) Deserializer Module</h3>
-  <p>
-    The <b>Deserializer</b> module converts incoming serial data into parallel form. 
-    This is essential in UART-like systems where data arrives bit by bit but needs 
-    to be reconstructed into complete data words for processing.
-  </p>
-
- <h4>a) Functionality</h4>
-  <ul>
-    <li>Shifts incoming serial bits into a shift register on each clock pulse.</li>
-    <li>Accumulates the bits until a full word (e.g., 8 bits) is received.</li>
-    <li>Generates a <b>data valid</b> signal once the entire word is reconstructed.</li>
-    <li>Interfaces with the Counter to ensure correct timing for sampling bits.</li>
-  </ul>
-
-  <h4>b) Role in System</h4>
-  <p>
-    It works in 
-    conjunction with the Counter to correctly align incoming bits and assemble them 
-    into parallel format. Once data is ready, it can be passed to higher-level 
-    processing units.
-  </p>
-
-<h3>4) Sampler Module</h3>
+<h3>3) Sampler Module</h3>
   <p>
     The <b>Sampler</b> module ensures that incoming serial data is captured 
     at the correct timing. In UART-based systems, data must be sampled at 
@@ -322,6 +298,30 @@ The Counter works closely with the FSM, which controls when counting starts and 
     data is then passed into the Deserializer, where it is shifted and 
     accumulated into parallel form.
   </p>
+<h3>4) Deserializer Module</h3>
+  <p>
+    The <b>Deserializer</b> module converts incoming serial data into parallel form. 
+    This is essential in UART-like systems where data arrives bit by bit but needs 
+    to be reconstructed into complete data words for processing.
+  </p>
+
+ <h4>a) Functionality</h4>
+  <ul>
+    <li>Shifts incoming serial bits into a shift register on each clock pulse.</li>
+    <li>Accumulates the bits until a full word (e.g., 8 bits) is received.</li>
+    <li>Generates a <b>data valid</b> signal once the entire word is reconstructed.</li>
+    <li>Interfaces with the Counter to ensure correct timing for sampling bits.</li>
+  </ul>
+
+  <h4>b) Role in System</h4>
+  <p>
+    It works in 
+    conjunction with the Counter to correctly align incoming bits and assemble them 
+    into parallel format. Once data is ready, it can be passed to higher-level 
+    processing units.
+  </p>
+
+
 
 
    <h3>5) Error Detection Module</h3>
@@ -351,6 +351,7 @@ The Counter works closely with the FSM, which controls when counting starts and 
     higher-level layers to handle faults, request retransmissions, or 
     discard corrupted frames.
   </p>
+
 
 
 
