@@ -13,6 +13,9 @@
     <li><a href="#interface" class="toc-link">Top Interface</a></li>
     <li><a href="#Architecture of UART Transmitter" class="toc-link">Architecture of UART Transmitter</a></li>
     <li><a href="#Architecture of UART Reciver" class="toc-link">Architecture of UART Reciver</a></li>
+    <li><a href="#Baud Generator 'Frequency Divider'" class="toc-link">Baud Generator 'Frequency Divider'</a></li>
+
+
   </ul>
 </div>
 <hr/>
@@ -354,6 +357,7 @@ The Counter works closely with the FSM, which controls when counting starts and 
 
 
 
+<h2 id="Baud Generator 'Frequency Divider'">Baud Generator 'Frequency Divider'</h2>
 
 
 
