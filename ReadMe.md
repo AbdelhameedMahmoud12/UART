@@ -156,7 +156,7 @@ receive).</li>
 <h3>1. FSM of Transmitter</h3>
 <p><strong>Role:</strong> The UART_FSM_Tx module implements a finite state machine to control the UART transmission sequence, transitioning through states: IDLE, START, DATA, PARITY (optional), STOP, and back to IDLE, based on input signals like Data_Valid, Parity_Enable, and Done_Flag. In IDLE, it waits for data, then moves to START to send the start bit, followed by DATA for the 8 data bits, optionally proceeds to PARITY if enabled, and finally sends the STOP bit before returning to IDLE. The module uses state encoding with a 5-bit register, with combinational logic dictating next state transitions and output signals—Busy and Selector—that indicate transmission status and select the appropriate data bit or control signal for the multiplexer driving the UART transmission line. The design ensures synchronized control over UART data flow, managing the timing and sequence of bits in a reliable manner..</p>
 <figure style="text-align:center; margin:20px 0;">
-  <img src="docs/FSM_Tx.png" alt="UART Transmitter State Machine" width="1000">
+  <img src="docs/FSM_Tx.png" alt="UART Transmitter State Machine" width="500">
   <figcaption style="font-size:14px; color:#555; margin-top:8px;">
     Figure 3: UART Transmitter State Machine
   </figcaption>
@@ -214,7 +214,7 @@ receive).</li>
 <li><strong>STOP</strong> — Validate stop bit (<code>Stop_En</code>). On success assert <code>DATA_VLD</code>; if <code>~RX_IN</code> is seen immediately, start a new frame; on <code>Stop_error</code> return to <strong>IDLE</strong>.</li>
 </ul>
 <figure style="text-align:center; margin:20px 0;">
-  <img src="docs/FSM_Rx.png" alt="UART Reciver State Machine" width="1000">
+  <img src="docs/FSM_Rx.png" alt="UART Reciver State Machine" width="500">
   <figcaption style="font-size:14px; color:#555; margin-top:8px;">
     Figure 5: UART Reciver State Machine
   </figcaption>
@@ -351,6 +351,7 @@ The Counter works closely with the FSM, which controls when counting starts and 
     higher-level layers to handle faults, request retransmissions, or 
     discard corrupted frames.
   </p>
+
 
 
 
